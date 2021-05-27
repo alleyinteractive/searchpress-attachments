@@ -184,6 +184,11 @@ class SP_Attachments {
 		// Set attachment data to empty string for default.
 		$data['attachment']['data'] = '';
 
+		// Return early if the content type is not attachment.
+		if ( 'attachment' !== $data['post_type'] ) {
+			return $data;
+		}
+
 		// Initialize filesystem.
 		if ( true !== WP_Filesystem( request_filesystem_credentials( site_url() ) ) && empty( $wp_filesystem ) ) {
 			return $data;
