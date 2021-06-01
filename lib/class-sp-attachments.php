@@ -2,7 +2,7 @@
 /**
  * SP Attachments main functionality.
  *
- * @package     searchpress-attachments
+ * @package searchpress-attachments
  */
 
 /**
@@ -26,14 +26,14 @@ class SP_Attachments {
 	 *
 	 * @var string
 	 */
-	public $pipeline_name;
+	public $pipeline_name = 'attachment';
 
 	/**
 	 * Maximum allowed filesize in bytes for indexed attachments.
 	 *
 	 * @var int
 	 */
-	public $max_file_size;
+	public $max_file_size = 5242880;
 
 	/**
 	 * Ensure singletons can't be instantiated outside the `instance()` method.
@@ -66,7 +66,7 @@ class SP_Attachments {
 		 *
 		 * @param string $pipeline_name Name of attachment pipeline.
 		 */
-		$this->pipeline_name = apply_filters( 'sp_attachments_pipeline_name', 'attachment' );
+		$this->pipeline_name = apply_filters( 'sp_attachments_pipeline_name', $this->pipeline_name );
 
 		/**
 		 * Filter the max file size for indexed attachments.
@@ -74,7 +74,7 @@ class SP_Attachments {
 		 *
 		 * @param int $max_file_size Max allowed file size in bytes.
 		 */
-		$this->max_file_size = apply_filters( 'sp_attachments_max_file_size', 5242880 );
+		$this->max_file_size = apply_filters( 'sp_attachments_max_file_size', $this->max_file_size );
 
 		// Add pipeline to index path.
 		add_filter ('sp_post_index_path', [ $this, 'add_pipeline_to_post_index_path' ], 10, 2 );
