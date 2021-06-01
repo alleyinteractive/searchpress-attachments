@@ -5,6 +5,8 @@
  * @package searchpress-attachments
  */
 
+namespace SPA;
+
 /**
  * Class SP_Attachments.
  */
@@ -190,7 +192,7 @@ class SP_Attachments {
 		}
 
 		// Initialize filesystem.
-		if ( true !== WP_Filesystem( request_filesystem_credentials( site_url() ) ) && empty( $wp_filesystem ) ) {
+		if ( true !== \WP_Filesystem( request_filesystem_credentials( site_url() ) ) && empty( $wp_filesystem ) ) {
 			return $data;
 		}
 
