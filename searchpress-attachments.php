@@ -27,7 +27,7 @@
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-namespace Searchpress_Attachments;
+namespace SPA;
 
 // Define constants.
 if ( ! defined( 'SP_ATTACHMENTS_PLUGIN_URL' ) ) {
@@ -50,7 +50,7 @@ function _sp_attachments_print_admin_notice() {
 	if (
 		! function_exists( 'sp_es_version_compare' ) ||
 		! sp_es_version_compare( '7.0' ) ||
-		! \SP_Attachments::ingest_attachment_plugin_is_active()
+		! SP_Attachments::ingest_attachment_plugin_is_active()
 	) : ?>
 		<div class="notice notice-error is-dismissible">
 			<p><?php esc_html_e( 'SearchPress Attachments Add-on require ES 7+, SearchPress, and for the ES Plugin "Ingest Attachment Processor" to be installed on  your ES Node.', 'searchpress-attachments' ); ?></p>
@@ -60,5 +60,4 @@ function _sp_attachments_print_admin_notice() {
 }
 
 add_action( 'admin_notices', __NAMESPACE__ . '\_sp_attachments_print_admin_notice' );
-
-\SP_Attachments::instance();
+add_action( 'after_setup_theme', [ __NAMESPACE__ . '\SP_Attachments', 'instance' ] );
