@@ -46,20 +46,19 @@ require_once SP_ATTACHMENTS_PLUGIN_DIR . '/lib/class-sp-attachments.php';
  * @TODO Create better notices.
  */
 function _sp_attachments_print_admin_notice() {
-	?>
-	<div class="notice notice-error">
-		<p><?php esc_html_e( 'SearchPress Attachments Add-on require ES 7+, SearchPress, and for the ES Plugin "Ingest Attachment Processor" to be installed on  your ES Node.', 'searchpress-attachments' ); ?></p>
-	</div>
+	// Set up if SP is installed and ES version is at least 7.0.
+	if (
+		! function_exists( 'sp_es_version_compare' ) ||
+		! sp_es_version_compare( '7.0' ) ||
+		! \SP_Attachments::ingest_attachment_plugin_is_active()
+	) : ?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php esc_html_e( 'SearchPress Attachments Add-on require ES 7+, SearchPress, and for the ES Plugin "Ingest Attachment Processor" to be installed on  your ES Node.', 'searchpress-attachments' ); ?></p>
+		</div>
 	<?php
+	endif;
 }
 
-// Set up if SP is installed and ES version is at least 7.0.
-if (
-	function_exists( 'sp_es_version_compare' ) &&
-	sp_es_version_compare( '7.0' ) &&
-	\SP_Attachments::ingest_attachment_plugin_is_active()
-) {
-	\SP_Attachments::instance();
-} else {
-	add_action( 'admin_notices', __NAMESPACE__ . '\_sp_attachments_print_admin_notice' );
-}
+add_action( 'admin_notices', __NAMESPACE__ . '\_sp_attachments_print_admin_notice' );
+
+\SP_Attachments::instance();
